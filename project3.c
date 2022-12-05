@@ -233,7 +233,14 @@ int main(int argc, char** argv) {
                         }
                         else if (status) {
                             deadlock[idx] = 1;
-                            fseek(files[idx], -1, SEEK_CUR);
+                            int offset = 0;
+                            for (int i = 0; i < 64; ++i) {
+                                if (line[i] == '\0') {
+                                    break;
+                                }
+                                ++offset;
+                            }
+                            fseek(files[idx], -offset, SEEK_CUR);
                             counter = q;
                         }
                         else {
