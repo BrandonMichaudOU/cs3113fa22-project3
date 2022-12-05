@@ -233,6 +233,8 @@ int main(int argc, char** argv) {
                         }
                         else if (status) {
                             deadlock[idx] = 1;
+                            fseek(files[idx], -1, SEEK_CUR);
+                            counter = q;
                         }
                         else {
                             deadlock[idx] = 0;
