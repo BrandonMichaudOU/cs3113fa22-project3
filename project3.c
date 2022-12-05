@@ -422,8 +422,26 @@ int main(int argc, char** argv) {
                     }
                     else {
                         int status = buddy(&buddyMem, name, size);
-                        if (!status) {
+                        if (!status && deadlock[idx]) {
+                            printf("DEADLOCK DETECTED");
+                            closeAll(closed, files, p);
+                            return -1;
+                        }
+                        else if (!status) {
                             printf("FAIL REQUEST %s %d\n", name, size);
+                            deadlock[idx] = 1;
+                            int offset = 0;
+                            for (int i = 0; i < 64; ++i) {
+                                if (line[i] == '\0') {
+                                    break;
+                                }
+                                ++offset;
+                            }
+                            fseek(files[idx], -offset, SEEK_CUR);
+                            counter = q;
+                        }
+                        else {
+                            deadlock[idx] = 0;
                         }
                     }
                 }
