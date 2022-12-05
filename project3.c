@@ -152,6 +152,14 @@ void find(mem **head, char name[16]) {
 	}
 }
 
+void closeAll(int *closed, FILE **files, int n) {
+    for (int i = 0; i < n; ++i) {
+        if (!closed[i]) {
+            fclose(files[i]);
+        }
+    }
+}
+
 int main(int argc, char** argv) {
     // Pull out arguments
     int q = atoi(argv[1]);
@@ -229,6 +237,7 @@ int main(int argc, char** argv) {
                         int status = firstFit(&memory, name, size, n);
                         if (status && deadlock[idx]) {
                             printf("DEADLOCK DETECTED");
+                            closeAll(closed, files, p);
                             return -1;
                         }
                         else if (status) {
@@ -270,6 +279,7 @@ int main(int argc, char** argv) {
                     }
                     else {
                         printf("Invalid command\n");
+                        closeAll(closed, files, p);
                         return -1;
                     }
                 }
@@ -281,6 +291,7 @@ int main(int argc, char** argv) {
                 }
                 else {
                     printf("Invalid command\n");
+                    closeAll(closed, files, p);
                     return -1;
                 }
                 ++counter;
@@ -290,4 +301,6 @@ int main(int argc, char** argv) {
         // Go to the next file pointer circularly
         idx = (idx + 1) % p;
     }
+    closeAll(closed, files, p);
+    return 0;
 }
