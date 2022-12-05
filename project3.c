@@ -164,7 +164,7 @@ int releaseBuddy(bud **root, char name[16]) {
         return found;
     }
     else if (currNode->name != NULL && strcmp(currNode->name, name) == 0) {
-        printf("FREE %s %d %d\n", name, currNode->used, currNode->start);
+        printf("FREE %s %d %d\n", name, currNode->size, currNode->start);
         currNode->empty = 1;
         currNode->used = 0;
         bud *parent = currNode->parent;
@@ -258,7 +258,7 @@ void listAssignedBuddy(bud **root) {
         return;
     }
     else if (!currNode->empty && currNode->left == NULL && currNode->right == NULL) {
-        printf("(%s, %d, %d) ", currNode->name, currNode->used, currNode->start);
+        printf("(%s, %d, %d) ", currNode->name, currNode->size, currNode->start);
         return;
     }
     else {
