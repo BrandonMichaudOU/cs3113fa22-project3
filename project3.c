@@ -82,11 +82,11 @@ int firstFit(mem **head, char name[16], int size, int totalMem) {
 			new->next = NULL;
 			*head = new;
 			printf("ALLOCATED %s %d\n", name, 0);
-            return 0;
+            return 1;
 		}
 		else {
 			printf("FAIL REQUEST %s %d\n", name, size);
-            return -1;
+            return 0;
 		}
 	}
 	else {
@@ -107,7 +107,7 @@ int firstFit(mem **head, char name[16], int size, int totalMem) {
 					*head = new;
 				}
 				printf("ALLOCATED %s %d\n", name, new->start);
-				return 0;
+				return 1;
 			}
 			curr = currNode->start + currNode->size;
 			last = currNode;
@@ -123,11 +123,11 @@ int firstFit(mem **head, char name[16], int size, int totalMem) {
 				last->next = new;
 			}
 			printf("ALLOCATED %s %d\n", name, new->start);
-            return 0;
+            return 1;
 		}
 		else {
 			printf("FAIL REQUEST %s %d\n", name, size);
-            return -1;
+            return 0;
 		}
 	}
 }
@@ -399,12 +399,12 @@ int main(int argc, char** argv) {
                     //printf("REQUEST %s %d\n", name, size);
                     if (type == 0) {
                         int status = firstFit(&memory, name, size, n);
-                        /*if (status && deadlock[idx]) {
+                        if (!status && deadlock[idx]) {
                             printf("DEADLOCK DETECTED\n");
                             closeAll(closed, files, p);
                             return -1;
                         }
-                        else if (status) {
+                        else if (!status) {
                             deadlock[idx] = 1;
                             int offset = 0;
                             for (int i = 0; i < 64; ++i) {
@@ -418,7 +418,7 @@ int main(int argc, char** argv) {
                         }
                         else {
                             deadlock[idx] = 0;
-                        }*/
+                        }
                     }
                     else {
                         int status = buddy(&buddyMem, name, size);
