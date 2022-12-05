@@ -423,6 +423,7 @@ int main(int argc, char** argv) {
                     else {
                         int status = buddy(&buddyMem, name, size);
                         if (!status && deadlock[idx]) {
+                            printf("FAIL REQUEST %s %d\n", name, size);
                             printf("DEADLOCK DETECTED");
                             closeAll(closed, files, p);
                             return -1;
