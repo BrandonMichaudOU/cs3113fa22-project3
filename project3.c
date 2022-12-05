@@ -221,7 +221,7 @@ int listAvailableBuddy(bud **root) {
         return full;
     }
     else if (currNode->empty) {
-        printf("(%d, %d) ", currNode->start, currNode->size);
+        printf("(%d, %d) ", currNode->size, currNode->start);
         full = 0;
         return full;
     }
