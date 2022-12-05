@@ -399,7 +399,7 @@ int main(int argc, char** argv) {
                     //printf("REQUEST %s %d\n", name, size);
                     if (type == 0) {
                         int status = firstFit(&memory, name, size, n);
-                        if (status && deadlock[idx]) {
+                        /*if (status && deadlock[idx]) {
                             printf("DEADLOCK DETECTED\n");
                             closeAll(closed, files, p);
                             return -1;
@@ -418,7 +418,7 @@ int main(int argc, char** argv) {
                         }
                         else {
                             deadlock[idx] = 0;
-                        }
+                        }*/
                     }
                     else {
                         int status = buddy(&buddyMem, name, size);
