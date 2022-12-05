@@ -7,10 +7,10 @@ Use `make all` to build the executable program. After this has been done, the pr
 The program operates under the assumption that the executable call will be formatted as described in the project description and that there will be p input files following the format 0.ins, 1.ins, ..., (p-1).ins. It also assumes that multiple processes can have the same name. When this is the case and release or find is called with the process name, it uses the first process in memory with the name.
 
 # Functions
-The program begins in the main function and then calls other functions depending on the input line from the files. There are fittingly named functions which perform the job of first fit request, buddy system request, release, list available, list assigned, and find. 
+The program begins in the main function and then calls other functions depending on the input line from the files. There are fittingly named functions for both first fit and buddy which perform the job of request, release, list available, list assigned, and find. 
 
 # Bugs
-There is a bug currently I discovered from running the test files where on the corner cases the program fails with status 255. I can not debug this issue because I do not have direct access to the tests and Gradescope does not provide any extra debugging material beyond the error code.
+There is currently a bug I discovered from running the test files where two of the deadlock tests for FIRSTFIT fail with status 255. It has proven too difficult to debug this issue because I do not have direct access to the tests and Gradescope does not provide any extra debugging material beyond the error code.
 
 # Libraries/Sources
 No external libraries or web sources were used in this program.
