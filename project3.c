@@ -400,7 +400,7 @@ int main(int argc, char** argv) {
                     if (type == 0) {
                         int status = firstFit(&memory, name, size, n);
                         if (status && deadlock[idx]) {
-                            printf("DEADLOCK DETECTED");
+                            printf("DEADLOCK DETECTED\n");
                             closeAll(closed, files, p);
                             return -1;
                         }
@@ -424,7 +424,7 @@ int main(int argc, char** argv) {
                         int status = buddy(&buddyMem, name, size);
                         if (!status && deadlock[idx]) {
                             printf("FAIL REQUEST %s %d\n", name, size);
-                            printf("DEADLOCK DETECTED");
+                            printf("DEADLOCK DETECTED\n");
                             closeAll(closed, files, p);
                             return -1;
                         }
