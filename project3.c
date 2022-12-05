@@ -10,7 +10,7 @@ struct mem {
 };
 typedef struct mem mem;
 
-void firstFit(mem **head, char name[16], int size, int totalMem) {
+int firstFit(mem **head, char name[16], int size, int totalMem) {
 	mem *currNode = *head;
 	if (currNode == NULL) {
 		if (size <= totalMem) {
@@ -21,9 +21,11 @@ void firstFit(mem **head, char name[16], int size, int totalMem) {
 			new->next = NULL;
 			*head = new;
 			printf("ALLOCATED %s %d\n", name, 0);
+            return 0;
 		}
 		else {
 			printf("FAIL REQUEST %s %d\n", name, size);
+            return -1;
 		}
 	}
 	else {
@@ -44,7 +46,7 @@ void firstFit(mem **head, char name[16], int size, int totalMem) {
 					*head = new;
 				}
 				printf("ALLOCATED %s %d\n", name, new->start);
-				return;
+				return 0;
 			}
 			curr = currNode->start + currNode->size;
 			last = currNode;
@@ -60,9 +62,11 @@ void firstFit(mem **head, char name[16], int size, int totalMem) {
 				last->next = new;
 			}
 			printf("ALLOCATED %s %d\n", name, new->start);
+            return 0;
 		}
 		else {
 			printf("FAIL REQUEST %s %d\n", name, size);
+            return -1;
 		}
 	}
 }
@@ -185,6 +189,12 @@ int main(int argc, char** argv) {
     }
     int numClosed = 0;
 
+    // Create an array to represent whether a file is in deadlock or not
+    int deadlock[p];
+    for (int i = 0; i < p; ++i) {
+        deadlock[i] = 0;
+    }
+
     // Create variables to use for looping over the files
     int idx = 0;
     char line[64];
@@ -216,7 +226,17 @@ int main(int argc, char** argv) {
                     sscanf(line, "%s %s %d\n", command, name, &size);
                     //printf("REQUEST %s %d\n", name, size);
                     if (type == 0) {
-                        firstFit(&memory, name, size, n);
+                        int status = firstFit(&memory, name, size, n);
+                        if (status && deadlock[idx]) {
+                            printf("DEADLOCK DETECTED");
+                            return -1;
+                        }
+                        else if (status) {
+                            deadlock[idx] = 1;
+                        }
+                        else {
+                            deadlock[idx] = 0;
+                        }
                     }
                     else {
                         buddy(&memory, name, size, n);
