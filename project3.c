@@ -402,7 +402,7 @@ int main(int argc, char** argv) {
                         if (!status && deadlock[idx]) {
                             printf("DEADLOCK DETECTED\n");
                             closeAll(closed, files, p);
-                            return -1;
+                            return 0;
                         }
                         else if (!status) {
                             deadlock[idx] = 1;
@@ -426,7 +426,7 @@ int main(int argc, char** argv) {
                             printf("FAIL REQUEST %s %d\n", name, size);
                             printf("DEADLOCK DETECTED\n");
                             closeAll(closed, files, p);
-                            return -1;
+                            return 0;
                         }
                         else if (!status) {
                             printf("FAIL REQUEST %s %d\n", name, size);
